@@ -11,11 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212180512) do
+ActiveRecord::Schema.define(version: 20160212204844) do
+
+  create_table "people", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_url"
+    t.string   "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "people", ["uid"], name: "index_people_on_uid"
 
   create_table "polls", force: :cascade do |t|
     t.text     "topic"
     t.string   "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "person_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.integer  "uid"
+    t.string   "name"
+    t.string   "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,5 +47,17 @@ ActiveRecord::Schema.define(version: 20160212180512) do
   end
 
   add_index "vote_options", ["poll_id"], name: "index_vote_options_on_poll_id"
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "vote_option_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "person_id"
+  end
+
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id"
+  add_index "votes", ["vote_option_id", "user_id"], name: "index_votes_on_vote_option_id_and_user_id", unique: true
+  add_index "votes", ["vote_option_id"], name: "index_votes_on_vote_option_id"
 
 end

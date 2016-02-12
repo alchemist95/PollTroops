@@ -1,14 +1,7 @@
-<p id="notice"><%= notice %></p>
+<% content_for(:page_header) {"Share your opinion"} %>
 
-<p>
-  <strong>Topic:</strong>
-  <%= @poll.topic %>
-</p>
+<h2><%= @poll.topic %></h2>
 
-<p>
-  <strong>Category:</strong>
-  <%= @poll.category %>
-</p>
 
-<%= link_to 'Edit', edit_poll_path(@poll) %> |
-<%= link_to 'Back', polls_path %>
+<%= render 'voting_form' %>
+
